@@ -3,40 +3,76 @@ package space.guslix.chat
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import android.view.Menu
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import space.guslix.chat.databinding.ActivityMainBinding
+import space.guslix.chat.fragments.ChatsFragment
+import space.guslix.chat.fragments.SearchFragment
+import space.guslix.chat.fragments.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var appBarConfiguration: AppBarConfiguration
-private lateinit var binding: ActivityMainBinding
+    //для поиска элементов из layout
+    private var binding: ActivityMainBinding? = null
+    private val krik get() = binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(krik.root)
 
-     binding = ActivityMainBinding.inflate(layoutInflater)
-     setContentView(binding.root)
+        //toolbar
+        setSupportActionBar(krik.toolbar)
+        supportActionBar!!.title = ""
 
-        setSupportActionBar(binding.toolbar)
+        //управление фрагментами
+        val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
+        viewPagerAdapter.addFragment(ChatsFragment(),"Чаты")
+        viewPagerAdapter.addFragment(SearchFragment(),"Поиск")
+        viewPagerAdapter.addFragment(SettingsFragment(),"Настройки")
+        krik.viewPager.adapter = viewPagerAdapter
+        krik.tabLayout.setupWithViewPager(krik.viewPager)
     }
-override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when(item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    //сбросить binding чтобы очистить память
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+    }
+
+    //управление фрагментами
+    internal class ViewPagerAdapter(fragmentManager: FragmentManager) :
+            FragmentPagerAdapter(fragmentManager) {
+        private val fragments: ArrayList<Fragment> = ArrayList<Fragment>()
+        private val titles: ArrayList<String> = ArrayList<String>()
+
+        override fun getCount(): Int {
+            return fragments.size
+        }
+        override fun getItem(position: Int): Fragment {
+            return fragments[position]
+        }
+        fun addFragment(fragment: Fragment, title: String){
+            fragments.add(fragment)
+            titles.add(title)
+        }
+
+        override fun getPageTitle(i: Int): CharSequence? {
+            return titles[i]
         }
     }
 }
