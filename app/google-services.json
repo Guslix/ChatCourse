@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1009290920879",
+    "project_id": "chat-df593",
+    "storage_bucket": "chat-df593.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009290920879:android:fe21eac8b9390bc634a55a",
+        "android_client_info": {
+          "package_name": "space.guslix.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1009290920879-9e1c3isd40agrvnchm7p504gqp25cd5s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCWVPPu5ZG4j5u60TXhdVOsG3n4Me_Gy4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1009290920879-9e1c3isd40agrvnchm7p504gqp25cd5s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
