@@ -30,9 +30,9 @@ class MainActivity : AppCompatActivity() {
 
         //управление фрагментами
         val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
-        viewPagerAdapter.addFragment(ChatsFragment(),"Чаты")
-        viewPagerAdapter.addFragment(SearchFragment(),"Поиск")
-        viewPagerAdapter.addFragment(SettingsFragment(),"Настройки")
+        viewPagerAdapter.addFragment(ChatsFragment(),R.string.chats.toString())
+        viewPagerAdapter.addFragment(SearchFragment(),R.string.search.toString())
+        viewPagerAdapter.addFragment(SettingsFragment(),R.string.settings.toString())
         krik.viewPager.adapter = viewPagerAdapter
         krik.tabLayout.setupWithViewPager(krik.viewPager)
     }
