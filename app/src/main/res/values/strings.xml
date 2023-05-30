@@ -47,7 +47,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sign_in">ВХОД</string>
     <string name="sign_in2">ВОЙТИ</string>
+    <string name="sign_in_screen">Экран входа</string>
     <string name="sign_up">РЕГИСТРАЦИЯ</string>
+    <string name="sign_up_m">Регистрация</string>
     <string name="chats">Чаты</string>
     <string name="search">Поиск</string>
     <string name="settings">Настройки</string>
