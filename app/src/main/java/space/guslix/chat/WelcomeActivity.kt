@@ -3,15 +3,18 @@ package space.guslix.chat
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import space.guslix.chat.databinding.ActivityWelcomeBinding
 
 class WelcomeActivity : AppCompatActivity() {
-    var binding: ActivityWelcomeBinding? = null
-    val krik get() = binding!!
+    private var binding: ActivityWelcomeBinding? = null
+    private val krik get() = binding!!
+    private var backPressTime: Long = 0
+
     //аккаунт
-    var firebaseUser: FirebaseUser? = null
+    private var firebaseUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +43,18 @@ class WelcomeActivity : AppCompatActivity() {
             val intent = Intent(this@WelcomeActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
+        }
+    }
+
+    //кнопка Назад - выйти из приложения
+    override fun onBackPressed() {
+        val toast = Toast.makeText(this@WelcomeActivity, getString(R.string.backPress_welcome), Toast.LENGTH_LONG)
+        if(System.currentTimeMillis()-backPressTime > 2000){
+            toast.show()
+            backPressTime = System.currentTimeMillis()
+        } else {
+            toast.cancel()
+            super.onBackPressed()
         }
     }
 

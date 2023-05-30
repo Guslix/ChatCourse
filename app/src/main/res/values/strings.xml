@@ -56,4 +56,11 @@
     <string name="username_hint">Псевдоним</string>
     <string name="hint_email">E-mail</string>
     <string name="hint_password">Пароль</string>
+    <string name="error_">Ошибка: </string>
+
+    <string name="registerError_noUsername">Вы забыли ввести имя</string>
+    <string name="registerError_noEmail">Вы забыли ввести E-mail</string>
+    <string name="registerError_noPassword">Вы забыли ввести пароль</string>
+    <string name="backPress_main">Нажмите ещё раз, чтобы выйти из аккаунта</string>
+    <string name="backPress_welcome">Нажмите ещё раз, чтобы выйти из приложения</string>
 </resources>
