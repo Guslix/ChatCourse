@@ -12,6 +12,7 @@ class WelcomeActivity : AppCompatActivity() {
     private var binding: ActivityWelcomeBinding? = null
     private val krik get() = binding!!
     private var backPressTime: Long = 0
+    private lateinit var toast: Toast
 
     //аккаунт
     private var firebaseUser: FirebaseUser? = null
@@ -48,14 +49,15 @@ class WelcomeActivity : AppCompatActivity() {
 
     //кнопка Назад - выйти из приложения
     override fun onBackPressed() {
-        val toast = Toast.makeText(this@WelcomeActivity, getString(R.string.backPress_welcome), Toast.LENGTH_LONG)
         if(System.currentTimeMillis()-backPressTime > 2000){
+            toast = Toast.makeText(this@WelcomeActivity, getString(R.string.backPress_welcome), Toast.LENGTH_LONG)
             toast.show()
-            backPressTime = System.currentTimeMillis()
         } else {
             toast.cancel()
             super.onBackPressed()
+            return
         }
+        backPressTime = System.currentTimeMillis()
     }
 
     override fun onDestroy() {

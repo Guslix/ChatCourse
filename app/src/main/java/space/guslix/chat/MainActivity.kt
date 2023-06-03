@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.google.firebase.auth.FirebaseAuth
 import space.guslix.chat.databinding.ActivityMainBinding
 import space.guslix.chat.fragments.ChatsFragment
 import space.guslix.chat.fragments.SearchFragment
@@ -20,12 +21,15 @@ class MainActivity : AppCompatActivity() {
     private var binding: ActivityMainBinding? = null
     private val krik get() = binding!!
     private var backPressTime: Long = 0
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var toast: Toast
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(krik.root)
+        mAuth = FirebaseAuth.getInstance()
 
         //toolbar
         setSupportActionBar(krik.toolbar)
@@ -44,31 +48,43 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    //обработчик нажатий на меню
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+        when(item.itemId) {
+            //выйти из аккаунта
+            R.id.action_logout -> {
+                signOut()
+                return true
+            }
         }
+        return false
     }
 
     //кнопка Назад - выйти из аккаунта
     override fun onBackPressed() {
-        val toast = Toast.makeText(this@MainActivity, getString(R.string.backPress_main), Toast.LENGTH_LONG)
         if(System.currentTimeMillis()-backPressTime > 2000){
+            toast = Toast.makeText(this@MainActivity, getString(R.string.backPress_main), Toast.LENGTH_LONG)
             toast.show()
-            backPressTime = System.currentTimeMillis()
         } else {
             toast.cancel()
-            val intent = Intent(this@MainActivity, WelcomeActivity::class.java)
-            startActivity(intent)
-            finish()
+            signOut()
+            return
         }
+        backPressTime = System.currentTimeMillis()
     }
 
     //сбросить binding чтобы очистить память
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    //выход из аккаунта
+    private fun signOut(){
+        mAuth.signOut()
+        val intent = Intent(this@MainActivity, WelcomeActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     //управление фрагментами
